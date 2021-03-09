@@ -16,10 +16,13 @@ CREATE FUNCTION retrievecustomers(integer , integer) RETURNS setof customer AS $
 		ELSE IF e >= 600 THEN
 			RAISE EXCEPTION 'end is bigger than 600';
 		ELSE:
-			SELECT ROW_NUMBER() OVER(
-       			ORDER BY address_id) AS RowNum, 
-       			address_id
-			FROM Customer
+			RETURN QUERY
+			SELECT customer2.customer_id,customer2.store_id,customer2.first_name,customer2.last_name,
+			customer2.email,customer2.address_id,customer2.activebool,customer2.create_date,
+			customer2.last_update,customer2.active FROM(
+			SELECT *,row_number() OVER (order by customer.address_id) as rnum
+			FROM customer
+ 			) AS customer2
 		END IF 
 	END;
 	$$ LANGUAGE plpgsql;
