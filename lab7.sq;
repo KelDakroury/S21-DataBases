@@ -23,7 +23,7 @@ CREATE FUNCTION retrievecustomers(integer , integer) RETURNS setof customer AS $
 			SELECT *,row_number() OVER (order by customer.address_id) as rnum
 			FROM customer
  			) AS customer2
-			WHERE customer2.rnum BETWEEN start_from AND stop_at;
+			WHERE customer2.rnum BETWEEN start_from s AND stop_at e;
 		END IF 
 	END;
 	$$ LANGUAGE plpgsql;
