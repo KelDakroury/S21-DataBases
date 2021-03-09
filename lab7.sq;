@@ -1,0 +1,25 @@
+CREATE FUNCTION retrievecustomers(integer , integer) RETURNS setof customer AS $$
+	DECLARE
+    	s ALIAS FOR $1;
+    	e ALIAS FOR $1;
+	
+	BEGIN
+		IF s <0  THEN 
+			RAISE EXCEPTION 'start is a nigative number';
+		
+		ELSE IF e < 0 THEN
+			RAISE EXCEPTION 'end is less than 0';
+	
+		ELSE IF s >= 600 THEN
+			RAISE EXCEPTION 'start is bigger than 600';
+	
+		ELSE IF e >= 600 THEN
+			RAISE EXCEPTION 'end is bigger than 600';
+		ELSE:
+			SELECT ROW_NUMBER() OVER(
+       			ORDER BY address_id) AS RowNum, 
+       			address_id
+			FROM Customer
+		END IF 
+	END;
+	$$ LANGUAGE plpgsql;
