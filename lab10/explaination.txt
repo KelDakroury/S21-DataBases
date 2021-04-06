@@ -1,0 +1,11 @@
+i) READ COMMITTED: a query within a transaction will pick up changes made by another committed transaction.	
+	we start for example terminal X and terminal Y
+	we set the isolation level with read committed in terminal X
+	when a transaction is done in terminal Y, terminal X will be updated with it
+	terminal X was diffrent from terminal Y, since terminal Y was not committed yet
+
+ii) REPEATABLE READ: Committed rows in other sessions are only visible to the transaction block when it ends
+	we start terminal X and terminal Y
+	we set the isolation level in terminla X with  REPEATABLE READ
+	when a transaction is done in terminal Y, terminal X will not be updated with the transaction unless we commit"end" it in terminal Y.
+	
